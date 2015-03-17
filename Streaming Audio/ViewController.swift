@@ -7,19 +7,34 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class ViewController: UIViewController {
+    var playerController: AVPlayerViewController? = nil
+    
+    @IBOutlet weak var URLTextField: UITextField!
+    
+    private struct StoryboardConstant {
+        static let playerSegue = "PlayerSegue"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == StoryboardConstant.playerSegue {
+            if let playerViewController = segue.destinationViewController as? AVPlayerViewController {
+                playerController = playerViewController
+            }
+        }
     }
-
-
+    @IBAction func handlePlayButtonPressed(sender: UIButton) {
+        let URL = NSURL(string:URLTextField.text)
+        playerController?.player = AVPlayer(URL: URL)
+        playerController?.player.play()
+    }
 }
 
