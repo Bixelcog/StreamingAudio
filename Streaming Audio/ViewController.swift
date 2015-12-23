@@ -32,9 +32,9 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func handlePlayButtonPressed(sender: UIButton) {
-        let URL = NSURL(string:URLTextField.text)
+        guard let text = URLTextField.text, URL = NSURL(string: text) else { return }
         playerController?.player = AVPlayer(URL: URL)
-        playerController?.player.play()
+        playerController?.player?.play()
     }
 }
 
